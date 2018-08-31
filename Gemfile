@@ -19,7 +19,7 @@ gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'coffee-rails', '~> 4.2' # Use CoffeeScript for .coffee assets and views
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'bcrypt', '~> 3.1.7' # Use ActiveModel has_secure_password
+gem 'bcrypt', '~> 3.1.7' # Use ActiveModel has_secure_password to hash the password_digest in bcrypt when saving in db
 gem 'bootsnap', '>= 1.1.0', require: false # Reduces boot times through caching; required in config/boot.rb
 gem 'bootstrap-sass', '3.3.7' 
 gem 'faker',          '1.7.3'

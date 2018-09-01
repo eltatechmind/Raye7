@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(name: "Example User", phone: "1273737878", role: "Driver", password: "foobar", password_confirmation: "foobar")
+    @user = User.new(name: "Example User", phone: "9999999999", role: "Driver", password: "foobar", password_confirmation: "foobar")
   end
 
   test "role should be valid" do

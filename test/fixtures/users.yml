@@ -1,1 +1,5 @@
-# empty
+michael:
+  name: Ahmed Fouad
+  phone: 8888888888
+  role: Passenger
+  password_digest: <%= User.digest('password') %>

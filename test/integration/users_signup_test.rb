@@ -5,7 +5,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     get signup_path
     assert_no_difference 'User.count' do
       post users_path, params: { user: { name:  "",
-                                         phone: "1273737878",
+                                         phone: "9999999999",
                                          role: "Driver",
                                          password:              "foo",
                                          password_confirmation: "bar" } }
@@ -20,7 +20,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     get signup_path
     assert_difference 'User.count', 1 do
       post users_path, params: { user: { name:  "Example User",
-                                         phone: "1273737878",
+                                         phone: "9999999999",
                                          role: "Passenger",
                                          password:              "password",
                                          password_confirmation: "password" } }
@@ -28,5 +28,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_template 'users/show'
     assert_not flash.empty?
+    assert is_logged_in?
   end
 end

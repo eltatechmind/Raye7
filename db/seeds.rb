@@ -1,6 +1,6 @@
 User.create!(name:  "Ahmed Mohamed Fouad",
              phone: "1273737878",
-             rol: 'Driver',
+             role: 'Driver',
              password:              "12345678",
              password_confirmation: "12345678"
              )

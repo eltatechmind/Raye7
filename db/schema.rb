@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_02_005954) do
+ActiveRecord::Schema.define(version: 2018_09_02_204138) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -38,12 +38,37 @@ ActiveRecord::Schema.define(version: 2018_09_02_005954) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "pickups", force: :cascade do |t|
+    t.datetime "dtime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "source_id"
+    t.integer "destination_id"
+    t.index ["destination_id"], name: "index_pickups_on_destination_id"
+    t.index ["source_id"], name: "index_pickups_on_source_id"
+    t.index ["user_id"], name: "index_pickups_on_user_id"
+  end
+
   create_table "places", force: :cascade do |t|
     t.string "name"
     t.integer "longitude"
     t.integer "latitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.integer "seatsno"
+    t.datetime "dtime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "source_id"
+    t.integer "destination_id"
+    t.index ["destination_id"], name: "index_trips_on_destination_id"
+    t.index ["source_id"], name: "index_trips_on_source_id"
+    t.index ["user_id"], name: "index_trips_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

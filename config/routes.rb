@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'trips/new'
+  get 'pickups/new'
   get 'places/new'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

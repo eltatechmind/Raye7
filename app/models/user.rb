@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :pickups, dependent: :destroy
+  has_many :trips, dependent: :destroy
 	attr_accessor :remember_token
 	validates :name,  presence: true, length: { minimum: 5, maximum: 50 }
 	VALID_PHONE_REGEX = /\A[0-9]+\z/

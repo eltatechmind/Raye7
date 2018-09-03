@@ -4,8 +4,7 @@
         <%= link_to "Raye7", root_path, id: "logo" %>
         <nav>
           <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Home", root_path %></li>
-            <li><%= link_to "Help", help_path %></li>
+            <li><%= link_to "Places", places_path %></li>
             <% if logged_in? %>
             <li><%= link_to "Profile", current_user  %></li>
             <li class="dropdown">

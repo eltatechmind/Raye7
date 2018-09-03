@@ -1,0 +1,11 @@
+<% provide(:title, "Sources & Destinations") %>
+
+<div class="jumbotron">
+<h1 class= "hdhd">Sources & Destinations supported by Raye7</h1>
+  <% @places.each do |cate| %>
+  <ul class="list-group">
+      <h3 class = "hdhd2"><%= cate.name %> </h3>
+      <br><br>
+  </ul>   
+  <% end %>
+</div>

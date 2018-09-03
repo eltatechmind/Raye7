@@ -22,5 +22,8 @@ Rails.application.routes.draw do
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
   resources :users
-  
+
+  #places routes
+  get '/places', to: 'places#show'
+
 end

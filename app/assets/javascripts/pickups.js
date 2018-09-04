@@ -4,15 +4,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     var xhttp = new XMLHttpRequest();
 
-    //go to edit specific pickup page
-    $('.editpickup.btn.btn-primary').on('click', function() {
-        var pickup_div = $(this).parents('.editpickupparent');
-        var pickup_id = pickup_div.attr('id');
-        var x = "../pickups/" + pickup_id + "/edit";
-        $(location).attr('href', x);
-    });
-
-
 	// delete the pickup you choose
 
     $('.removepickup.btn.btn-primary').on('click', function() {

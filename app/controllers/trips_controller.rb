@@ -1,7 +1,7 @@
 class TripsController < ApplicationController
-  before_action :logged_in_user, only: [:new, :create, :edit, :update, :delete]
-  before_action :correct_trip,   only: [ :edit, :update, :delete]
-  before_action :confirm_role, only: [ :new, :create, :edit, :update, :delete]
+  before_action :logged_in_user, only: [:new, :create, :delete]
+  before_action :correct_trip,   only: [ :delete]
+  before_action :confirm_role, only: [ :new, :create, :delete]
 
   def new
     @user = current_user
@@ -21,26 +21,16 @@ class TripsController < ApplicationController
     end
   end
 
-  def edit
-    @trip = Trip.find(params[:id])
-    @place = Place.all
-  end
-
-
-  def update
-  	@place = Place.all
-    @trip = Trip.find(params[:id])
-    if @trip.update_attributes(trip_params)
-      flash[:success] = "Trip edited"
-      redirect_to current_user
-    else
-      render 'edit'
-    end
-  end
-
   def delete
     @trip = Trip.find(params[:id])
     if !@trip.nil?
+      @pickup = Pickup.where(trip_id: @trip.id)
+      @pickup.each do |addr|
+        addr.trip_id = nil
+        addr.trip_driver = nil
+        addr.trip_dtime = nil
+        addr.save
+      end
       @trip.destroy
       render json: { success_message: "Success!, Trip is deleted." }, status: :ok
     end

@@ -23,16 +23,15 @@
         	<div class= "list-group-item beda">
         		<p style= "color:red; font-weight: bold;"> Trip #<%=countr%> </p>
         		<ul class="list-group">
+
+                <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Trip id:</span><span style= "color:brown; font-weight: bold;"> #<%=addr.id%> </span></li>
+
           			<li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Source:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.source_id).first.name %> </span></li>
           			<li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Destination:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.destination_id).first.name %> </span></li>
           			<li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Seats Available:</span><span style= "color:brown; font-weight: bold;"> <%=addr.seatsno %> </span></li>
           			<li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Departure Time:</span><span style= "color:brown; font-weight: bold;"> <%=addr.dtime %> </span></li>
-
-	          		<span class="edittripparent" id="<%= addr.id %>">
-	              		<button class="edittrip btn btn-primary">Edit Trip</button>
-	          		</span>
 					
-	          		<span class="removetripparent" id="<%= addr.id %>" style= "float:right;">
+	          		<span class="removetripparent" id="<%= addr.id %>">
 	              		<button class="removetrip btn btn-primary">Delete Trip</button>
 	          		</span>
 
@@ -59,10 +58,20 @@
         	<div class= "list-group-item beda">
         		<p style= "color:red; font-weight: bold;"> Trip #<%=countr%> </p>
         		<ul class="list-group">
+
+                <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Trip id:</span><span style= "color:brown; font-weight: bold;"> #<%=addr.id%> </span></li>
+
           			<li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Source:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.source_id).first.name %> </span></li>
           			<li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Destination:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.destination_id).first.name %> </span></li>
           			<li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Seats Available:</span><span style= "color:brown; font-weight: bold;"> <%=addr.seatsno %> </span></li>
           			<li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Departure Time:</span><span style= "color:brown; font-weight: bold;"> <%=addr.dtime %> </span></li>
+
+                <span class="removetripparent" id="<%= addr.id %>">
+                    <button class="removetrip btn btn-primary">Delete Trip</button>
+                </span>
+
+                <p class="successr<%= addr.id %> alert alert-success" style="display: none;"></p>
+                <p class="errorl<%= addr.id %> alert alert-danger" style="display: none;"></p>
         		</ul>    
         	</div> 
         	<br>
@@ -77,20 +86,19 @@
         <p class = "hdhd">Current Pickups</p>
         <% countr = 1 %>
         <% @pickup.each do |addr| %>
-          <% if addr.dtime >= Time.current %>
+          <% if addr.dtime >= Time.current && (addr.trip_id == nil || addr.trip_id == '') %>
           <div class= "list-group-item beda">
             <p style= "color:red; font-weight: bold;"> Pickup #<%=countr%> </p>
             <ul class="list-group">
+
+                <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Pickup id:</span><span style= "color:brown; font-weight: bold;"> #<%=addr.id%> </span></li>
+
                 <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Source:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.source_id).first.name %> </span></li>
                 <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Destination:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.destination_id).first.name %> </span></li>
 
-                <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Departure Time:</span><span style= "color:brown; font-weight: bold;"> <%=addr.dtime %> </span></li>
-
-                <span class="editpickupparent" id="<%= addr.id %>">
-                    <button class="editpickup btn btn-primary">Edit Pickup</button>
-                </span>
+                <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Departure Time:</span><span style= "color:brown; font-weight: bold;"> <%=addr.dtime %> (Not Booked Yet!</span></li>
           
-                <span class="removepickupparent" id="<%= addr.id %>" style= "float:right;">
+                <span class="removepickupparent" id="<%= addr.id %>">
                     <button class="removepickup btn btn-primary">Delete Pickup</button>
                 </span>
 
@@ -113,23 +121,50 @@
         <p class = "hdhd">Booked/Expired</p>
         <% countr = 1 %>
         <% @pickup.each do |addr| %>
-          <% if addr.dtime < Time.current %>
-          <div class= "list-group-item beda">
-            <p style= "color:red; font-weight: bold;"> Pickup #<%=countr%> </p>
-            <ul class="list-group">
-                <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Source:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.source_id).first.name %> </span></li>
-                <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Destination:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.destination_id).first.name %> </span></li>
+          <% if addr.dtime < Time.current || addr.trip_id != nil%>
+            <div class= "list-group-item beda">
+              <% if addr.dtime < Time.current && addr.trip_id == nil %>
+                <p style= "color:red; font-weight: bold;"> Pickup #<%=countr%> </p>
+                <ul class="list-group">
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Pickup id:</span><span style= "color:brown; font-weight: bold;"> #<%=addr.id%> </span></li>
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Source:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.source_id).first.name %> </span></li>
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Destination:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.destination_id).first.name %> </span></li>
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Departure Time:</span><span style= "color:brown; font-weight: bold;"> <%=addr.dtime %> (Didn't Booked)</span></li>
 
-                <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Departure Time:</span><span style= "color:brown; font-weight: bold;"> <%=addr.dtime %> </span></li>
-            </ul>    
-          </div> 
-          <br>
-          <% countr+=1 %>
+                  <span class="removepickupparent" id="<%= addr.id %>">
+                      <button class="removepickup btn btn-primary">Delete Pickup</button>
+                  </span>
+
+                  <p class="successr<%= addr.id %> alert alert-success" style="display: none;"></p>
+                  <p class="errorl<%= addr.id %> alert alert-danger" style="display: none;"></p>
+                </ul>
+                <br>
+                <% countr+=1 %>
+              <% else %>
+                <p style= "color:red; font-weight: bold;"> Pickup #<%=countr%> </p>
+                <ul class="list-group">
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Pickup id:</span><span style= "color:brown; font-weight: bold;"> #<%=addr.id%> </span></li>
+
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Source:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.source_id).first.name %> </span></li>
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Destination:</span><span style= "color:brown; font-weight: bold;"> <%=Place.where(id: addr.destination_id).first.name %> </span></li>
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Trip id:</span><span style= "color:brown; font-weight: bold;"> #<%=addr.trip_id %></span></li>
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Trip Departure Time:</span><span style= "color:brown; font-weight: bold;"> <%=addr.trip_dtime%> (Booked Successfully)</span></li>
+                  <li class="list-group-item beda"><span style= "color:green; font-weight: bold;">Trip Driver Name:</span><span style= "color:brown; font-weight: bold;"> <%=addr.trip_driver %></span></li>
+
+                  <span class="removepickupparent" id="<%= addr.id %>">
+                      <button class="removepickup btn btn-primary">Delete Pickup</button>
+                  </span>
+
+                  <p class="successr<%= addr.id %> alert alert-success" style="display: none;"></p>
+                  <p class="errorl<%= addr.id %> alert alert-danger" style="display: none;"></p>
+                </ul>
+                <br>
+                <% countr+=1 %>
+              <% end %>
+            </div> 
           <% end %>
         <% end %>
     </aside>
-
   <% end %>  
-
   </div>
 </div>

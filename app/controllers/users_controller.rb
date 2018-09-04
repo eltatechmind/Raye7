@@ -10,6 +10,21 @@ class UsersController < ApplicationController
 	  @user = User.find(params[:id])
     @trip = @user.trips.where("trips.user_id= ?", @user.id).order('dtime')
     @pickup = @user.pickups.where("pickups.user_id= ?", @user.id).order('dtime')
+    @pickup.each do |addr|
+      
+      if !addr.nil? && ( addr.trip_driver.nil? || addr.trip_driver == '' )
+        x = Trip.where("dtime >= ? and dtime <= ? and dtime >= ? and source_id = ? and destination_id = ?  and seatsno > 0", addr.dtime-2.hours, addr.dtime+1.hours, Time.current, addr.source_id, addr.destination_id).order('dtime').first
+        if !x.nil?
+          addr.trip_driver = User.where(id: x.user_id).first.name
+          addr.trip_id = x.id
+          addr.trip_dtime = x.dtime
+          x.seatsno = x.seatsno - 1
+          x.save
+          addr.save
+        end
+      end
+    end
+
   end
 
   def create

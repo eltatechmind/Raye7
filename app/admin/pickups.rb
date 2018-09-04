@@ -11,6 +11,6 @@ ActiveAdmin.register Pickup do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
-permit_params :dtime, :user_id, :source_id, :destination_id
+permit_params :dtime, :user_id, :source_id, :destination_id, :trip_driver, :trip_id, :trip_dtime
 
 end

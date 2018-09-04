@@ -1,7 +1,7 @@
 class PickupsController < ApplicationController
-  before_action :logged_in_user, only: [:new, :create, :edit, :update, :delete]
-  before_action :correct_pickup,   only: [ :edit, :update, :delete]
-  before_action :confirm_role, only: [ :new, :create, :edit, :update, :delete]
+  before_action :logged_in_user, only: [:new, :create, :delete]
+  before_action :correct_pickup,   only: [ :delete]
+  before_action :confirm_role, only: [ :new, :create, :delete]
 
   def new
     @user = current_user
@@ -21,26 +21,14 @@ class PickupsController < ApplicationController
     end
   end
 
-  def edit
-    @pickup = Pickup.find(params[:id])
-    @place = Place.all
-  end
-
-
-  def update
-  	@place = Place.all
-    @pickup = Pickup.find(params[:id])
-    if @pickup.update_attributes(pickup_params)
-      flash[:success] = "Pickup edited"
-      redirect_to current_user
-    else
-      render 'edit'
-    end
-  end
-
   def delete
     @pickup = Pickup.find(params[:id])
     if !@pickup.nil?
+      @trip = Trip.where(id: @pickup.trip_id).first
+      if !@trip.nil?
+        @trip.seatsno = @trip.seatsno + 1
+        @trip.save
+      end
       @pickup.destroy
       render json: { success_message: "Success!, Pickup is deleted." }, status: :ok
     end
@@ -53,7 +41,7 @@ class PickupsController < ApplicationController
   
 
   def pickup_params
-      params.require(:pickup).permit(:user_id, :source_id, :destination_id, :dtime)
+      params.require(:pickup).permit(:user_id, :source_id, :destination_id, :dtime, :trip_driver, :trip_id, :trip_dtime)
   end
 
   # Before filters

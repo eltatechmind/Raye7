@@ -4,15 +4,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     var xhttp = new XMLHttpRequest();
 
-    //go to edit specific trip page
-    $('.edittrip.btn.btn-primary').on('click', function() {
-        var trip_div = $(this).parents('.edittripparent');
-        var trip_id = trip_div.attr('id');
-        var x = "../trips/" + trip_id + "/edit";
-        $(location).attr('href', x);
-    });
-
-
 	// delete the trip you choose
 
     $('.removetrip.btn.btn-primary').on('click', function() {

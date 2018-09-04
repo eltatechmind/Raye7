@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_02_204138) do
+ActiveRecord::Schema.define(version: 2018_09_04_063006) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -45,6 +45,9 @@ ActiveRecord::Schema.define(version: 2018_09_02_204138) do
     t.integer "user_id"
     t.integer "source_id"
     t.integer "destination_id"
+    t.string "trip_driver"
+    t.integer "trip_id"
+    t.datetime "trip_dtime"
     t.index ["destination_id"], name: "index_pickups_on_destination_id"
     t.index ["source_id"], name: "index_pickups_on_source_id"
     t.index ["user_id"], name: "index_pickups_on_user_id"

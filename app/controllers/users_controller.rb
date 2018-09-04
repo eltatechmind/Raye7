@@ -8,6 +8,8 @@ class UsersController < ApplicationController
 
   def show
 	  @user = User.find(params[:id])
+    @trip = @user.trips.where("trips.user_id= ?", @user.id).order('dtime')
+    @pickup = @user.pickups.where("pickups.user_id= ?", @user.id).order('dtime')
   end
 
   def create
@@ -27,8 +29,17 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    role = @user.role
     if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
+      if role == 'Driver' && @user.role == 'Passenger'
+        @user.trips.destroy_all
+        flash[:success] = "Your Profile had been updated, changed to Passenger and all your trips destroyed!"
+      elsif role == 'Passenger' && @user.role == 'Driver'
+        @user.pickups.destroy_all
+        flash[:success] = "Your Profile had been updated, changed to Driver and all your Pickups destroyed!"
+      else
+        flash[:success] = "Profile updated"
+      end
       redirect_to @user
     else
       render 'edit'

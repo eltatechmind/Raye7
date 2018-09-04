@@ -1,21 +1,21 @@
-<% provide(:title, 'Create Pickup') %>
-<h1>Create Pickup</h1>
+<% provide(:title, 'Edit Pickup') %>
+<h1>Edit Pickup</h1>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@pickup, url: createpickup_path) do |f| %>
+    <%= form_for(@pickup) do |f| %>
       <%= render 'shared/error_messages' %>
 
       <% options = options_from_collection_for_select(@place, 'id', 'name') %>
       <%= f.label :source_id, 'Source' %>
-	  <%= f.select :source_id,  options %>
+      <%= f.select :source_id,  options %>
 
       <%= f.label :destination_id, 'Destination' %>
-	  <%= f.select :destination_id,  options %>
+      <%= f.select :destination_id,  options %>
 
       <%= f.label :dtime, 'Departure Time'%>
       <%= f.datetime_field :dtime, class: 'form-control' %>
 
-      <%= f.submit "Add Pickup", class: "btn btn-primary" %>
+      <%= f.submit "Edit Pickup", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

@@ -12,6 +12,12 @@
                 Account <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
+                <% if current_user.role == 'Driver' %>
+                <li><%= link_to "Create Trip", createtrip_path %></li>
+                <% end %>
+                <% if current_user.role == 'Passenger' %>
+                <li><%= link_to "Create Pickup", createpickup_path %></li>
+                <% end %>
                 <li><%= link_to "Settings", edit_user_path(current_user) %></li>
                 <li class="divider"></li>
                 <li>
@@ -20,6 +26,7 @@
               </ul>
             </li>
             <% else %>
+              <li><%= link_to "Sign up", signup_path %></li>
               <li><%= link_to "Log in", login_path %></li>
             <% end %>
           </ul>

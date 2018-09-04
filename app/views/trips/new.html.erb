@@ -1,2 +1,25 @@
-<h1>Trips#new</h1>
-<p>Find me in app/views/trips/new.html.erb</p>
+<% provide(:title, 'Create Trip') %>
+<h1>Create Trip</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@trip, url: createtrip_path) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <% options = options_from_collection_for_select(@place, 'id', 'name') %>
+      <%= f.label :source_id, 'Source' %>
+	  <%= f.select :source_id,  options %>
+
+      <%= f.label :destination_id, 'Destination' %>
+	  <%= f.select :destination_id,  options %>
+
+      <%= f.label :seatsno, 'Number Of Seats' %>
+      <%= f.select :seatsno, [3,4,5,6,7,8,9,10,11,12,13,14], class: 'form-control'%>
+
+      <%= f.label :dtime, 'Departure Time'%>
+      <%= f.datetime_field :dtime, class: 'form-control' %>
+
+      <%= f.submit "Add Trip", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+

@@ -26,4 +26,16 @@ Rails.application.routes.draw do
   #places routes
   get '/places', to: 'places#show'
 
+  #Trips routes
+  get  '/createtrip', to: 'trips#new'
+  post '/createtrip', to: 'trips#create'
+  post '/deletetrip', to: 'trips#delete'
+  resources :trips
+
+  #Pickups routes
+  get  '/createpickup', to: 'pickups#new'
+  post '/createpickup', to: 'pickups#create'
+  post '/deletepickup', to: 'pickups#delete'
+  resources :pickups
+
 end

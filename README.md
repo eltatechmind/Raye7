@@ -7,3 +7,11 @@
 - driver can delete his trips, and all the passengers pickups created will return to the not booked list
 - passenger pickups will be booked automatically everytime he visits his profile, if booked it will not be updated, if not booked it will search for an available trip in the range of 2 hours later and 1 hour sooner than the time of the pickup create.
 - created using Ruby on rails, html, scss, bootstrap, Javascript, Json
+
+
+If there was more time:
+
+- I would create more advanced matching between driver and passenger
+- I would add funds into the process, involve coupons, etc
+- I would add more testing
+- I would add review feature

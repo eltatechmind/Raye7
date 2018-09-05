@@ -2,13 +2,13 @@ class TripsController < ApplicationController
   before_action :logged_in_user, only: [:new, :create, :delete]
   before_action :correct_trip,   only: [ :delete]
   before_action :confirm_role, only: [ :new, :create, :delete]
-
+  # new action for the new view (get type)
   def new
     @user = current_user
     @trip = @user.trips.new
     @place = Place.all
   end
-
+ # create action
   def create
     @user = current_user
     @place = Place.all
@@ -20,11 +20,12 @@ class TripsController < ApplicationController
       render 'new'
     end
   end
-
+ # delete action
   def delete
     @trip = Trip.find(params[:id])
     if !@trip.nil?
       @pickup = Pickup.where(trip_id: @trip.id)
+      # delete all related pickups
       @pickup.each do |addr|
         addr.trip_id = nil
         addr.trip_driver = nil
@@ -41,7 +42,7 @@ class TripsController < ApplicationController
   private
 
   
-
+  # allow for submit
   def trip_params
       params.require(:trip).permit(:user_id, :source_id, :destination_id, :seatsno, :dtime)
   end

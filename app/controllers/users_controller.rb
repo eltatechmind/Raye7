@@ -1,17 +1,17 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update, :show]
   before_action :correct_user,   only: [:edit, :update, :show]
-
+  # new action
   def new
  	  @user = User.new
   end
-
+  # show action
   def show
 	  @user = User.find(params[:id])
     @trip = @user.trips.where("trips.user_id= ?", @user.id).order('dtime')
     @pickup = @user.pickups.where("pickups.user_id= ?", @user.id).order('dtime')
     @pickup.each do |addr|
-      
+      # everytime you get the show page, you pickups will be (booked if not)
       if !addr.nil? && ( addr.trip_driver.nil? || addr.trip_driver == '' )
         x = Trip.where("dtime >= ? and dtime <= ? and dtime >= ? and source_id = ? and destination_id = ?  and seatsno > 0", addr.dtime-2.hours, addr.dtime+1.hours, Time.current, addr.source_id, addr.destination_id).order('dtime').first
         if !x.nil?
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     end
 
   end
-
+  # create new user
   def create
     @user = User.new(user_params)
     if @user.save
@@ -37,11 +37,11 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
-
+  # edit it
   def edit
     @user = User.find(params[:id])
   end
-
+  # update the user, if changed from passenger to driver, all pickups will be destroyed, and vice versa
   def update
     @user = User.find(params[:id])
     role = @user.role

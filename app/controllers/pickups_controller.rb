@@ -2,13 +2,13 @@ class PickupsController < ApplicationController
   before_action :logged_in_user, only: [:new, :create, :delete]
   before_action :correct_pickup,   only: [ :delete]
   before_action :confirm_role, only: [ :new, :create, :delete]
-
+  # new for view (get)
   def new
     @user = current_user
     @pickup = @user.pickups.new
     @place = Place.all
   end
-
+  # create action
   def create
     @user = current_user
     @place = Place.all
@@ -20,10 +20,11 @@ class PickupsController < ApplicationController
       render 'new'
     end
   end
-
+  # delete action
   def delete
     @pickup = Pickup.find(params[:id])
     if !@pickup.nil?
+      # increase the number of seats available when pickup cancelled
       @trip = Trip.where(id: @pickup.trip_id).first
       if !@trip.nil?
         @trip.seatsno = @trip.seatsno + 1
